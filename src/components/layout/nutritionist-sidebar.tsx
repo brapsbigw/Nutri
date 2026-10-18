@@ -15,6 +15,8 @@ import {
   LogOut,
   Leaf,
   ShieldCheck,
+  Monitor,
+  Download,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Avatar } from "@/components/ui/avatar";
@@ -97,6 +99,25 @@ export function NutritionistSidebar({ user }: NutritionistSidebarProps) {
             );
           })}
         </nav>
+      </div>
+
+      {/* Download Desktop App Banner */}
+      <div className="px-3 mb-2">
+        <Link
+          href="/download"
+          className="flex items-center justify-between p-2.5 rounded-xl bg-gradient-to-r from-emerald-50/80 to-teal-50/40 border border-emerald-100 hover:border-emerald-200 text-xs transition-all group shadow-2xs hover:shadow-xs"
+        >
+          <div className="flex items-center gap-2">
+            <div className="h-7 w-7 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
+              <Monitor className="h-3.5 w-3.5" />
+            </div>
+            <div>
+              <p className="font-semibold text-slate-800">App para Windows</p>
+              <p className="text-[10px] text-slate-500">Instalar no PC (.exe)</p>
+            </div>
+          </div>
+          <Download className="h-3.5 w-3.5 text-emerald-600 group-hover:translate-y-0.5 transition-transform" />
+        </Link>
       </div>
 
       {/* Profile & Logout Footer */}

@@ -3,7 +3,7 @@
 import * as React from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { Leaf, Sparkles, Eye, EyeOff } from "lucide-react";
+import { Leaf, Sparkles, Eye, EyeOff, Monitor, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -208,6 +208,17 @@ export default function LoginPage() {
         <React.Suspense fallback={<div className="bg-white p-8 rounded-2xl text-center text-xs text-slate-500">A carregar...</div>}>
           <LoginForm />
         </React.Suspense>
+
+        <div className="mt-5 text-center">
+          <Link
+            href="/download"
+            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-medium text-slate-600 bg-white/80 hover:bg-white hover:text-emerald-700 border border-slate-200 shadow-2xs hover:shadow-xs transition-all group"
+          >
+            <Monitor className="h-4 w-4 text-emerald-600" />
+            <span>Usar a aplicação no computador?</span>
+            <span className="font-semibold text-emerald-600 group-hover:underline">Descarregar App Windows ➔</span>
+          </Link>
+        </div>
       </div>
     </div>
   );
