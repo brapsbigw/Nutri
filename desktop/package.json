@@ -1,0 +1,34 @@
+{
+  "name": "nutri-desktop",
+  "version": "1.0.0",
+  "description": "Nutri - Plataforma Clínica de Acompanhamento Nutricional",
+  "main": "main.js",
+  "author": "Nutri",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "electron": "^33.2.1",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.nutri.desktop",
+    "productName": "Nutri",
+    "win": {
+      "target": "nsis",
+      "icon": "icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Nutri"
+    },
+    "directories": {
+      "output": "dist"
+    }
+  }
+}
