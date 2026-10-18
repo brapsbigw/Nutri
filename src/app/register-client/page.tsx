@@ -3,7 +3,7 @@
 import * as React from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Leaf, UserPlus, Sparkles } from "lucide-react";
+import { Leaf, UserPlus, Sparkles, Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -13,6 +13,7 @@ export default function RegisterClientPage() {
   const [name, setName] = React.useState("");
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [showPassword, setShowPassword] = React.useState(false);
   const [phone, setPhone] = React.useState("");
 
   const [error, setError] = React.useState<string | null>(null);
@@ -131,11 +132,25 @@ export default function RegisterClientPage() {
 
             <Input
               label="Palavra-passe (mínimo 8 carateres) *"
-              type="password"
+              type={showPassword ? "text" : "password"}
               placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
+              trailingElement={
+                <button
+                  type="button"
+                  onClick={() => setShowPassword((prev) => !prev)}
+                  className="text-slate-400 hover:text-slate-600 focus:outline-none cursor-pointer p-1"
+                  aria-label={showPassword ? "Ocultar palavra-passe" : "Mostrar palavra-passe"}
+                >
+                  {showPassword ? (
+                    <EyeOff className="h-4 w-4" />
+                  ) : (
+                    <Eye className="h-4 w-4" />
+                  )}
+                </button>
+              }
             />
 
             <Input

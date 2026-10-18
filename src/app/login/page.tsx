@@ -3,7 +3,7 @@
 import * as React from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
-import { Leaf, Sparkles } from "lucide-react";
+import { Leaf, Sparkles, Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -14,6 +14,7 @@ function LoginForm() {
 
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [showPassword, setShowPassword] = React.useState(false);
   const [error, setError] = React.useState<string | null>(null);
   const [loading, setLoading] = React.useState(false);
 
@@ -73,11 +74,25 @@ function LoginForm() {
 
         <Input
           label="Palavra-passe"
-          type="password"
+          type={showPassword ? "text" : "password"}
           placeholder="••••••••"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
+          trailingElement={
+            <button
+              type="button"
+              onClick={() => setShowPassword((prev) => !prev)}
+              className="text-slate-400 hover:text-slate-600 focus:outline-none cursor-pointer p-1"
+              aria-label={showPassword ? "Ocultar palavra-passe" : "Mostrar palavra-passe"}
+            >
+              {showPassword ? (
+                <EyeOff className="h-4 w-4" />
+              ) : (
+                <Eye className="h-4 w-4" />
+              )}
+            </button>
+          }
         />
 
         <Button
@@ -91,49 +106,54 @@ function LoginForm() {
         </Button>
       </form>
 
-      {/* Demo Credentials Quick Switcher */}
-      <div className="mt-8 pt-6 border-t border-slate-100">
-        <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-600 uppercase tracking-wider mb-3">
-          <Sparkles className="h-3.5 w-3.5 text-emerald-600" />
-          <span>Contas de Demonstração (1-Clique)</span>
-        </div>
-        <div className="grid grid-cols-1 gap-2 text-xs">
-          <button
-            type="button"
-            onClick={() => fillDemo("sofia.martins@clinic.local", "Nutritionist123!")}
-            className="flex items-center justify-between p-2.5 rounded-lg border border-emerald-100 bg-emerald-50/40 hover:bg-emerald-50 text-left transition-colors cursor-pointer"
-          >
-            <div>
-              <p className="font-semibold text-emerald-950">Dra. Sofia Martins</p>
-              <p className="text-slate-500">Nutricionista (Clínica • Plano Pro)</p>
-            </div>
-            <span className="text-emerald-700 font-medium">Usar ➔</span>
-          </button>
+      {/* Demo Credentials Quick Switcher (Discreto / Recolhido para produção) */}
+      <div className="mt-6 pt-4 border-t border-slate-100">
+        <details className="group">
+          <summary className="flex items-center justify-between text-xs font-semibold text-slate-500 hover:text-slate-700 cursor-pointer select-none py-1">
+            <span className="flex items-center gap-1.5">
+              <Sparkles className="h-3.5 w-3.5 text-emerald-600" />
+              <span>Ambiente de Testes (Contas de Demonstração)</span>
+            </span>
+            <span className="text-[10px] text-slate-400 group-open:rotate-180 transition-transform">▼</span>
+          </summary>
+          <div className="mt-3 grid grid-cols-1 gap-2 text-xs">
+            <button
+              type="button"
+              onClick={() => fillDemo("sofia.martins@clinic.local", "Nutritionist123!")}
+              className="flex items-center justify-between p-2.5 rounded-lg border border-emerald-100 bg-emerald-50/40 hover:bg-emerald-50 text-left transition-colors cursor-pointer"
+            >
+              <div>
+                <p className="font-semibold text-emerald-950">Dra. Sofia Martins</p>
+                <p className="text-slate-500">Nutricionista (Clínica • Plano Pro)</p>
+              </div>
+              <span className="text-emerald-700 font-medium">Usar ➔</span>
+            </button>
 
-          <button
-            type="button"
-            onClick={() => fillDemo("ana.pereira@client.local", "ClientPassword123!")}
-            className="flex items-center justify-between p-2.5 rounded-lg border border-sky-100 bg-sky-50/40 hover:bg-sky-50 text-left transition-colors cursor-pointer"
-          >
-            <div>
-              <p className="font-semibold text-sky-950">Ana Pereira</p>
-              <p className="text-slate-500">Cliente (Plano ativo, diário e consultas)</p>
-            </div>
-            <span className="text-sky-700 font-medium">Usar ➔</span>
-          </button>
+            <button
+              type="button"
+              onClick={() => fillDemo("ana.pereira@client.local", "ClientPassword123!")}
+              className="flex items-center justify-between p-2.5 rounded-lg border border-sky-100 bg-sky-50/40 hover:bg-sky-50 text-left transition-colors cursor-pointer"
+            >
+              <div>
+                <p className="font-semibold text-sky-950">Ana Pereira</p>
+                <p className="text-slate-500">Cliente (Plano ativo, diário e consultas)</p>
+              </div>
+              <span className="text-sky-700 font-medium">Usar ➔</span>
+            </button>
 
-          <button
-            type="button"
-            onClick={() => fillDemo("admin@nutritionist.local", "AdminPassword123!")}
-            className="flex items-center justify-between p-2.5 rounded-lg border border-slate-200 bg-slate-50 hover:bg-slate-100 text-left transition-colors cursor-pointer"
-          >
-            <div>
-              <p className="font-semibold text-slate-900">Platform Admin</p>
-              <p className="text-slate-500">Administrador global da plataforma</p>
-            </div>
-            <span className="text-slate-600 font-medium">Usar ➔</span>
-          </button>
-        </div>
+            <button
+              type="button"
+              onClick={() => fillDemo("admin@nutritionist.local", "AdminPassword123!")}
+              className="flex items-center justify-between p-2.5 rounded-lg border border-slate-200 bg-slate-50 hover:bg-slate-100 text-left transition-colors cursor-pointer"
+            >
+              <div>
+                <p className="font-semibold text-slate-900">Platform Admin</p>
+                <p className="text-slate-500">Administrador global da plataforma</p>
+              </div>
+              <span className="text-slate-600 font-medium">Usar ➔</span>
+            </button>
+          </div>
+        </details>
       </div>
 
       <div className="mt-6 pt-6 border-t border-slate-100 flex flex-col gap-2 text-center text-xs text-slate-600">
