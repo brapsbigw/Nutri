@@ -8,22 +8,26 @@
     "start": "next start",
     "lint": "eslint",
     "db:push": "prisma db push",
-    "db:seed": "tsx prisma/seed.ts"
+    "db:seed": "tsx prisma/seed.ts",
+    "db:seed-portuguese": "tsx prisma/seed-portuguese-foods.ts"
   },
   "prisma": {
     "seed": "tsx prisma/seed.ts"
   },
   "dependencies": {
     "@prisma/client": "6.19.3",
+    "@types/stripe": "^8.0.416",
     "bcryptjs": "^3.0.3",
     "clsx": "^2.1.1",
     "date-fns": "^4.4.0",
     "jose": "^6.2.12",
+    "jspdf": "^4.2.1",
     "lucide-react": "^1.47.0",
     "next": "16.3.5",
     "prisma": "6.19.3",
     "react": "19.2.8",
     "react-dom": "19.2.8",
+    "stripe": "^23.0.0",
     "tailwind-merge": "^3.7.0",
     "zod": "^4.6.5"
   },

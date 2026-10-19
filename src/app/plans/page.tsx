@@ -9,7 +9,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Avatar } from "@/components/ui/avatar";
 import { EmptyState } from "@/components/ui/empty-state";
-import { Plus, UtensilsCrossed, ArrowRight, Clock } from "lucide-react";
+import { Plus, UtensilsCrossed, ArrowRight, Clock, Download } from "lucide-react";
 
 export default async function PlansPage() {
   const session = await getSession();
@@ -123,12 +123,20 @@ export default async function PlansPage() {
                       <span className="text-[11px] text-slate-400">
                         Atualizado: {formatDate(plan.updatedAt)}
                       </span>
-                      <Link href={`/clients/${plan.clientId}`}>
-                        <Button variant="outline" size="sm" className="gap-1">
-                          <span>Ver na Ficha</span>
-                          <ArrowRight className="h-3 w-3" />
-                        </Button>
-                      </Link>
+                      <div className="flex items-center gap-2">
+                        <Link href={`/api/plans/${plan.id}/export`} target="_blank">
+                          <Button variant="outline" size="sm" className="gap-1">
+                            <Download className="h-3 w-3" />
+                            <span>PDF</span>
+                          </Button>
+                        </Link>
+                        <Link href={`/clients/${plan.clientId}`}>
+                          <Button variant="outline" size="sm" className="gap-1">
+                            <span>Ver na Ficha</span>
+                            <ArrowRight className="h-3 w-3" />
+                          </Button>
+                        </Link>
+                      </div>
                     </div>
                   </CardContent>
                 </Card>

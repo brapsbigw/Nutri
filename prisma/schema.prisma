@@ -76,17 +76,18 @@ model ClinicMember {
 }
 
 model NutritionistProfile {
-  id              String   @id @default(cuid())
-  userId          String   @unique
-  clinicId        String?
-  name            String
-  bio             String?
-  phone           String?
-  licenseNumber   String?
-  specializations String?  // comma-separated
-  avatarUrl       String?
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id                 String   @id @default(cuid())
+  userId             String   @unique
+  clinicId           String?
+  name               String
+  bio                String?
+  phone              String?
+  licenseNumber      String?
+  specializations    String?  // comma-separated
+  avatarUrl          String?
+  stripeCustomerId   String?  @unique
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
 
   user          User            @relation(fields: [userId], references: [id], onDelete: Cascade)
   clinic        Clinic?         @relation(fields: [clinicId], references: [id])

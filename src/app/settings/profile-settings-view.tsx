@@ -2,10 +2,11 @@
 
 import * as React from "react";
 import { useRouter } from "next/navigation";
-import { User, CheckCircle2, Building, ShieldCheck } from "lucide-react";
+import { User, CheckCircle2, Building, ShieldCheck, CreditCard, ExternalLink } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
 
 interface ProfileSettingsViewProps {
   profile: any;
@@ -157,6 +158,90 @@ export function ProfileSettingsView({
             </CardContent>
           </Card>
         )}
+
+        {/* Subscription Card */}
+        <Card className="border-slate-200">
+          <CardHeader className="py-3 px-5 bg-slate-50/50">
+            <CardTitle className="text-sm flex items-center gap-2">
+              <CreditCard className="h-4 w-4 text-emerald-600" />
+              <span>Subscrição & Pagamentos</span>
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="p-5 text-xs text-slate-700 space-y-3">
+            {profile?.subscription ? (
+              <>
+                <div className="flex items-center justify-between">
+                  <span className="font-semibold text-slate-900">Estado:</span>
+                  <Badge
+                    variant={
+                      profile.subscription.status === 'ACTIVE'
+                        ? 'success'
+                        : profile.subscription.status === 'TRIAL'
+                        ? 'warning'
+                        : 'default'
+                    }
+                  >
+                    {profile.subscription.status === 'ACTIVE'
+                      ? 'Ativa'
+                      : profile.subscription.status === 'TRIAL'
+                      ? 'Teste Grátis'
+                      : profile.subscription.status}
+                  </Badge>
+                </div>
+                {profile.subscription.currentPeriodEnd && (
+                  <div className="flex items-center justify-between">
+                    <span className="text-slate-600">Próxima renovação:</span>
+                    <span className="font-semibold text-slate-900">
+                      {new Date(profile.subscription.currentPeriodEnd).toLocaleDateString('pt-PT')}
+                    </span>
+                  </div>
+                )}
+                {profile.subscription.paymentSubscriptionId && (
+                  <div className="pt-2">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="w-full gap-1.5"
+                      onClick={async () => {
+                        const res = await fetch('/api/stripe/portal', {
+                          method: 'POST',
+                        });
+                        const data = await res.json();
+                        if (data.url) {
+                          window.open(data.url, '_blank');
+                        }
+                      }}
+                    >
+                      <ExternalLink className="h-3 w-3" />
+                      <span>Gestão de Pagamentos (Stripe)</span>
+                    </Button>
+                  </div>
+                )}
+              </>
+            ) : (
+              <div className="text-center py-4">
+                <p className="text-slate-500 mb-3">Nenhuma subscrição ativa</p>
+                <Button
+                  variant="primary"
+                  size="sm"
+                  onClick={async () => {
+                    const res = await fetch('/api/stripe/checkout', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/json' },
+                      body: JSON.stringify({ planSlug: 'starter' }),
+                    });
+                    const data = await res.json();
+                    if (data.url) {
+                      window.location.href = data.url;
+                    }
+                  }}
+                >
+                  Iniciar Subscrição
+                </Button>
+              </div>
+            )}
+          </CardContent>
+        </Card>
       </form>
     </div>
   );
